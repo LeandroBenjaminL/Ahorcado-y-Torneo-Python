@@ -29,7 +29,6 @@ def build_progress(word: str, guessed: list) -> str:
 def check_win(progress: str) -> bool:
     """Devuelve True si no quedan letras por adivinar."""
     if "_" not in progress:
-        print("¡Ganaste!")
         return True
     return False
 
@@ -41,7 +40,7 @@ def show_status(attempts: int, guessed: list) -> None:
     print(f"Letras usadas: {', '.join(guessed)}")
 
 
-def check_letter(letter: str, word: str, guessed: list, attempts: int) -> int:
+def check_letter(letter: str, word: str, guessed: list, attempts: int,points: int) -> tuple:
     """Verifica si la letra está en la palabra y actualiza el estado.
     Devuelve los intentos restantes actualizados.
     """
@@ -53,30 +52,32 @@ def check_letter(letter: str, word: str, guessed: list, attempts: int) -> int:
     else:
         guessed.append(letter)
         attempts -= 1
+        points -= 1
         print("Esa letra no está en la palabra.")
     print()
-    return  attempts
+    return  attempts, points
 
 def play_round(word: str) -> None:
     """Ejecuta una ronda completa con la palabra dada."""
-
+    points = 6
     guessed = []
     attempts = 6
     while attempts > 0:
         progress = build_progress(word, guessed)
         print(progress)
         if check_win(progress):
+            print(f"¡Ganaste! Tu puntaje fue: {points} puntos")
             break
         show_status(attempts, guessed)
         try:
             letter = input("Ingresá una letra: ")
-            attempts = check_letter(letter, word,guessed, attempts)
             validate_letter(letter)
+            attempts, points= check_letter(letter, word,guessed, attempts,points)
         except InvalidInputError as e:
             print(f'Entrada no válida: {e}')
             continue
     else:
-        print(f"¡Perdiste! La palabra era: {word}")
+        print(f"¡Perdiste! La palabra era: {word}... Tu puntaje es de: {points}")
 
 
 
