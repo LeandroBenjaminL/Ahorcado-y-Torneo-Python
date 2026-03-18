@@ -1,6 +1,6 @@
 """Módulo principal del juego del ahorcado."""
 import random
-from errors import EntradaInvalidaError
+from errors import InvalidInputError
 from validations import validate_letter
 
 ELIGIBLE_WORDS = [
@@ -68,8 +68,13 @@ def play_round(word: str) -> None:
         if check_win(progress):
             break
         show_status(attempts, guessed)
-        letter = input("Ingresá una letra: ")
-        attempts = check_letter(letter, word,guessed, attempts)
+        try:
+            letter = input("Ingresá una letra: ")
+            attempts = check_letter(letter, word,guessed, attempts)
+            validate_letter(letter)
+        except InvalidInputError as e:
+            print(f'Entrada no válida: {e}')
+            continue
     else:
         print(f"¡Perdiste! La palabra era: {word}")
 

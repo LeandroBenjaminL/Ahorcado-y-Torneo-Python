@@ -1,6 +1,6 @@
 """Validaciones de entrada del juego del ahorcado."""
 
-from errors import EntradaInvalidaError
+from errors import InvalidInputError
 
 
 def validate_letter(letter: str) -> None:
@@ -8,8 +8,8 @@ def validate_letter(letter: str) -> None:
     Lanza EntradaInvalidaError si la entrada no es válida.
     """
     if len(letter) == 0:
-        raise EntradaInvalidaError("No ingresaste nada.")
+        raise InvalidInputError("No ingresaste nada.")
     if len(letter) > 1:
-        raise EntradaInvalidaError("Solo podés ingresar una letra a la vez.")
+        raise InvalidInputError("Solo podés ingresar una letra a la vez.")
     if not letter.isalpha():
-        raise EntradaInvalidaError(f"'{letter}' no es una letra válida.")
+        raise InvalidInputError(f"'{letter}' no es una letra válida.")

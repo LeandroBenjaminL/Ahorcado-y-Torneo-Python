@@ -1,5 +1,5 @@
 """Errores personalizados del juego del ahorcado."""
 
-class EntradaInvalidaError(Exception):
+class InvalidInputError(Exception):
     """Error para entradas inválidas del usuario."""
 
