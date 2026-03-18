@@ -2,17 +2,10 @@
 import random
 from errors import InvalidInputError
 from validations import validate_letter
+from categories import choose_category
 
-ELIGIBLE_WORDS = [
-"python",
-"programa",
-"variable",
-"funcion",
-"bucle",
-"cadena",
-"entero",
-"lista",
-]
+
+
 
 def build_progress(word: str, guessed: list) -> str:
     """Construye y devuelve el progreso actual de la palabra.
@@ -86,5 +79,6 @@ def play_game() -> None:
 
     print("¡Bienvenido al Ahorcado!")
     print()
-    word = random.choice(ELIGIBLE_WORDS)
+    categories = choose_category()
+    word = random.choice(categories)
     play_round(word)
