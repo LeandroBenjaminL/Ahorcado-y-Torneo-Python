@@ -1,5 +1,7 @@
 """Módulo principal del juego del ahorcado."""
 import random
+from errors import EntradaInvalidaError
+from validations import validate_letter
 
 ELIGIBLE_WORDS = [
 "python",
@@ -80,4 +82,3 @@ def play_game() -> None:
     print()
     word = random.choice(ELIGIBLE_WORDS)
     play_round(word)
-
