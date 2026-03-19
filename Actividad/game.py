@@ -2,10 +2,24 @@
 import random
 from errors import InvalidInputError
 from validations import validate_letter
-from categories import choose_category
+from categories import choose_category, CATEGORY_ITEMS
 
 
 
+
+def ask_continue(prompt: str) -> bool:
+    """Pregunta al usuario si desea continuar. Devuelve True si elige si."""
+    while True:
+        try:
+            choice = input(prompt).strip().lower()
+            if choice == 'si':
+                return True
+            elif choice == 'no':
+                return False
+            else:
+                raise InvalidInputError('Ingrese solamente si o no')
+        except InvalidInputError as e:
+            print(f'Entrada no válida: {e}')
 
 def build_progress(word: str, guessed: list) -> str:
     """Construye y devuelve el progreso actual de la palabra.
@@ -79,6 +93,20 @@ def play_game() -> None:
 
     print("¡Bienvenido al Ahorcado!")
     print()
-    categories = choose_category()
-    word = random.choice(categories)
-    play_round(word)
+    available_categories = CATEGORY_ITEMS.copy()
+    while available_categories:
+        # El usuario elige una categoría, devuelve su nombre y lista de palabras
+        category_name, words = choose_category(available_categories)
+        print(f'Estas en la categoria: {category_name}')
+        # Mezcla las palabras para que salgan en orden aleatorio
+        words = random.sample(words, len(words))
+        # Elimina la categoría ya jugada para que no vuelva a aparecer
+        del available_categories[category_name]
+        # Juega una ronda por cada palabra hasta agotar la categoría
+        while words:
+            word = words.pop()
+            play_round(word)
+            if not ask_continue('¿Desea jugar con otra palabra? (si/no): '):
+                break
+        if not ask_continue('¿Desea jugar otra categoría? (si/no): '):
+            break

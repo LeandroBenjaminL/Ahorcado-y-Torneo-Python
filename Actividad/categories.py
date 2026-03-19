@@ -15,16 +15,16 @@ def show_categories(categories: dict) -> None:
         print(f' - {cat}: {", " .join(words)}')
         print()
 
-def choose_category() -> list:
+def choose_category(available_categories: dict) -> tuple:
     """Solicita al usuario que elija una categoría.
     Devuelve la lista de palabras de la categoría elegida.
     """
     while True:
-        show_categories(CATEGORY_ITEMS)
+        show_categories(available_categories)
         try:
             user_election = input('Elije una categoria válida').strip().lower()
-            if user_election in CATEGORY_ITEMS:
-                return  CATEGORY_ITEMS[user_election]
+            if user_election in available_categories:
+                return  user_election,available_categories[user_election]
             raise InvalidInputError('Ingrese una categoria válida')
 
         except InvalidInputError as e:
