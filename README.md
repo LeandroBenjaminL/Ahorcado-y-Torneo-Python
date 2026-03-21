@@ -41,7 +41,7 @@ python questions.py
 - Adivinar la palabra: +6 puntos
 - Perder: 0 puntos
 
-markdown# Actividad Extra — Simulador de Torneo de Fútbol
+# Actividad Extra — Simulador de Torneo de Fútbol
 
 Simulador de tabla de posiciones de un torneo de fútbol desarrollado en Python como actividad extra - UNLP.
 Permite agregar equipos, registrar resultados y mostrar la tabla ordenada por puntaje.
@@ -59,7 +59,7 @@ Permite agregar equipos, registrar resultados y mostrar la tabla ordenada por pu
 ```
 Actividad Extra/
     main.py          — punto de entrada
-    questions2.py    — menú y flujos principales
+    tournament_app.py    — menú y flujos principales
     tournament.py    — clase Tournament
     team.py          — clase Team
     validations.py   — validaciones de entrada
@@ -69,7 +69,7 @@ Actividad Extra/
 ## Diagrama de módulos
 ```mermaid
 flowchart TD
-    A[main.py] --> B[questions2.py]
+    A[main.py] --> B[tournament_app.py]
     B --> C[tournament.py]
     B --> D[team.py]
     B --> E[validations.py]
