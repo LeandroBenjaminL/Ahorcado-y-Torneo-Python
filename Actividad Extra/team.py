@@ -22,7 +22,9 @@ class Team:
         """
         return f'{self.team_name} : {self.wins} | {self.draws} | {self.losses} | {self.points} '
     def new_game(self, win: int, draws: int, losses: int):
-        """s"""
+        """
+            Suma los partidos ganados / empatados / perdidos 
+            """
         self.wins += win
         self.draws += draws
         self.losses += losses

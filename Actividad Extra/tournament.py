@@ -24,10 +24,11 @@ class Tournament:
         # sorted() devuelve una nueva lista ordenada que reemplaza la original.
         # key=lambda t: t.points indica el criterio de ordenamiento (puntos de cada equipo).
         # reverse=True invierte el orden para obtener de mayor a menor.
-        self.teams_table = sorted(self.teams_table, key=lambda t: t.points, reverse=True)
+        copy = self.teams_table[:]
+        copy = sorted(self.teams_table, key=lambda t: t.points, reverse=True)
         res = f'torneo: {self.tournament_name}\n'
-        for team in self.teams_table:
-            res += f"  - {team}\n"
+        for team in copy:
+            res += f"  - {team.team_name:<25} {team.wins:>2} | {team.draws:>2}| {team.losses:>2} | {team.points:>3}\n"
         return res
 
     def add_team(self, e: Team):
@@ -46,6 +47,7 @@ class Tournament:
     def add_result(self, local_team: str, visit_team: str, score1: int, score2: int):
         """
         Registra el resultado de un partido en la tabla de resultados.
+        Modifica el objeto team usando new_game. 
 
         Args:
             local_team: Nombre del equipo local.

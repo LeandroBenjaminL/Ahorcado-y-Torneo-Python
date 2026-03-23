@@ -33,6 +33,9 @@ def show_available_teams(teams: list) -> None:
     Args:
         teams: Lista de equipos disponibles para mostrar.
     """
+    if not teams:
+        print('No hay equipos disponibles para agregar')
+        return None
     print("\nEquipos disponibles:")
     cols = 3
     for i, team in enumerate(teams):
@@ -87,12 +90,19 @@ def add_teams_to_tournament(tournament: Tournament, team: str, teams: list, tabl
         teams: Lista de equipos disponibles — se elimina el equipo elegido.
         table: Lista de equipos ya agregados al torneo.
     """
-    new_equipe = Team(team)
-    tournament.add_team(new_equipe)
+    new_team = Team(team)
+    tournament.add_team(new_team)
     print(f'El equipo: {team} fue agregado con exito')
     teams.remove(team)
     table.append(team)
 
+def delete_team(t:Tournament, teams_table:list):
+    """ Elimina un equipo del torneo"""
+    show_available_teams(teams_table)
+    team_delete = ask_valid_input('Ingrese el nombre del equipo que desee eliminar',
+                                   validate_team_input, teams_table)
+    t.remove_team(team_delete)
+    teams_table.remove(team_delete)
 
 def add_team_flow(t: Tournament, teams_table: list, copy: list) -> None:
     """Flujo interactivo para agregar equipos al torneo.
@@ -107,6 +117,9 @@ def add_team_flow(t: Tournament, teams_table: list, copy: list) -> None:
     """
     while True:
         try:
+            if not copy:
+                print(' No se puede agragar equipos. ')
+                return
             show_available_teams(copy)
             new_team = choose_team(copy)
             add_teams_to_tournament(t, new_team, copy, teams_table)
@@ -168,8 +181,7 @@ def main() -> None:
             # Muestra la tabla ordenada por puntaje
             print(tournament)
         elif option == "4":
-            # eliminar equipo
-            pass
+            delete_team(tournament, teams_table)
         elif option == "5":
             print("¡FIN!")
             break
